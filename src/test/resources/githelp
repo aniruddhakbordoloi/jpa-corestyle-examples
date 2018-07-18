@@ -6,3 +6,12 @@ whereas the default user / email is configured in your ~/.gitconfig
 
 git config --global user.name "Your Name Here"
 git config --global user.email your@email.com
+
+So the gitconfig file in repo would have:
+[user]
+	name = codesmack
+	email = akb81ster@gmail.com
+
+Also add the following to the repo gitconfig file to remember your password:
+[credential]
+	helper = store
