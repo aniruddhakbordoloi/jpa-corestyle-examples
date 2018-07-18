@@ -1,0 +1,12 @@
+*.idea
+/*.idea
+*/.idea
+*.settings
+/*.settings
+*/.settings
+*.iml
+/*.iml
+*/.iml
+*target
+/*target
+*/target
