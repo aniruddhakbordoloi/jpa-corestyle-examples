@@ -18,3 +18,5 @@ changing the state of a persisted object in the scope of transaction start and c
 
 TODO:
 Read more about @Generated value strategies.
+
+
