@@ -1,14 +1,15 @@
 package com.codesmack.jpa;
 
-import com.codesmack.jpa.entity.unidirectional.onetoone.Product;
-import com.codesmack.jpa.entity.unidirectional.onetoone.Programmer;
+import com.codesmack.jpa.entity.Product;
+import com.codesmack.jpa.entity.Programmer;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.sql.Date;
+
+import static org.junit.Assert.assertNotNull;
 
 public class ProductProgrammerTest {
     private EntityManager entityManager;
@@ -28,6 +29,7 @@ public class ProductProgrammerTest {
         entityManager.getTransaction().commit();
         //clean up
         final Product retrievedProduct = entityManager.find(Product.class, product.getId());
+        assertNotNull(retrievedProduct);
         entityManager.getTransaction().begin();
         entityManager.remove(retrievedProduct);
         entityManager.getTransaction().commit();
@@ -42,6 +44,7 @@ public class ProductProgrammerTest {
         entityManager.getTransaction().commit();
         //clean up
         final Programmer retrievedProgrammer = entityManager.find(Programmer.class, programmer.getId());
+        assertNotNull(retrievedProgrammer);
         entityManager.getTransaction().begin();
         entityManager.remove(retrievedProgrammer);
         entityManager.getTransaction().commit();

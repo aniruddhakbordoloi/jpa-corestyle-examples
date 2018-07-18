@@ -1,4 +1,4 @@
-package com.codesmack.jpa.entity.unidirectional.onetoone;
+package com.codesmack.jpa.entity;
 
 import javax.persistence.*;
 

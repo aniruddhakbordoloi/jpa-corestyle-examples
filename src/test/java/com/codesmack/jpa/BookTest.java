@@ -72,7 +72,7 @@ public class BookTest {
 
     @Test
     public void thatEntityInsertionIsSuccessfulForGeneratorType() {//this needs an auto increment PK in the DB.
-        final BookEntityWithGenerator bookEntity = new BookEntityWithGenerator(null, "Codesmack's", "My Library", new Float(10), "123", 200);
+        final BookEntityWithGenerator bookEntity = new BookEntityWithGenerator("Codesmack's", "My Library", new Float(10), "123", 200);
         entityManager.getTransaction().begin();
         entityManager.persist(bookEntity);
         entityManager.getTransaction().commit();

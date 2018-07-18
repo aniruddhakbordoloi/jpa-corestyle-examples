@@ -4,17 +4,17 @@ create table jpa_core_style.Book(ID bigint(255) not null, TITLE VARCHAR(40), DES
 
 create table jpa_core_style.Book(ID bigint(255) not null auto_increment, TITLE VARCHAR(40), DESCRIPTION varchar(1000), UNIT_COST float(100,4), ISBN varchar(1000), NBR_OF_PAGE bigint(255), primary key (ID));
 
-drop table jpa_core_style.book;
-
 select * from jpa_core_style.Book;
-
 delete from jpa_core_style.Book;
+drop table jpa_core_style.book;
 
 insert into jpa_core_style.Book(TITLE, DESCRIPTION, UNIT_COST, ISBN, NBR_OF_PAGE)
 values ('check', 'check', 10, 'check', 100);
 
-select * from jpa_core_style.product;
+select * from jpa_core_style.dvd;
+delete from jpa_core_style.dvd;
+drop table jpa_core_style.dvd;
 
-delete from jpa_core_style.product;
-
-drop table jpa_core_style.product;
+select * from jpa_core_style.Programmer;
+delete from jpa_core_style.Programmer;
+drop table jpa_core_style.Programmer;

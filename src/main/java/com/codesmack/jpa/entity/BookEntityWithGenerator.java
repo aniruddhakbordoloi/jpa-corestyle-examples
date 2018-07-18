@@ -22,8 +22,7 @@ public class BookEntityWithGenerator {
     public BookEntityWithGenerator() {
     }
 
-    public BookEntityWithGenerator(final Long id, final String title, final String description, final Float unitCost, final String isbn, final Integer nbrOfPage) {
-        this.id = id;
+    public BookEntityWithGenerator(final String title, final String description, final Float unitCost, final String isbn, final Integer nbrOfPage) {
         this.title = title;
         this.description = description;
         this.unitCost = unitCost;
