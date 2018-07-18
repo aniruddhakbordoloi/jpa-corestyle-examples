@@ -10,6 +10,17 @@ It will look for how the database that you are using generates ids. For MySql or
 Either add a hibernate_sequence or
 your own sequence table and use the annotations to name your sequence table that you have.
 
+Relationships:
+JoinColumn - A PK column in one table is a FK column in another.
+JoinTable - We use a third table to show the association among two tables. The third table would have FKs that are respective PKs in the other two tables.
+
+Possible Cardinalities between relations:
+JPA         RDBMS
+@OneToOne = JoinColumn
+@OneToMany = JoinTable
+@ManyToOne = JoinColumn
+@ManyToMany = JoinTable
+
 Observations:
 Without an auto increment generator in the DB, the generation type did not work at all. With it, the primary key was generated when used identity generation. Having an auto
 increment and not having a generator also leads to error if PK is not provided.

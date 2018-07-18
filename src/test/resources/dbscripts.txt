@@ -1,12 +1,8 @@
 create database jpa_core_style;
 
-create table jpa_core_style.Book(ID bigint(255) not null,
-TITLE VARCHAR(40), DESCRIPTION varchar(1000), UNIT_COST float(100,4), ISBN varchar(1000), NBR_OF_PAGE bigint(255),
-primary key (ID));
+create table jpa_core_style.Book(ID bigint(255) not null, TITLE VARCHAR(40), DESCRIPTION varchar(1000), UNIT_COST float(100,4), ISBN varchar(1000), NBR_OF_PAGE bigint(255), primary key (ID));
 
-create table jpa_core_style.Book(ID bigint(255) not null auto_increment,
-TITLE VARCHAR(40), DESCRIPTION varchar(1000), UNIT_COST float(100,4), ISBN varchar(1000), NBR_OF_PAGE bigint(255),
-primary key (ID));
+create table jpa_core_style.Book(ID bigint(255) not null auto_increment, TITLE VARCHAR(40), DESCRIPTION varchar(1000), UNIT_COST float(100,4), ISBN varchar(1000), NBR_OF_PAGE bigint(255), primary key (ID));
 
 drop table jpa_core_style.book;
 
@@ -16,3 +12,9 @@ delete from jpa_core_style.Book;
 
 insert into jpa_core_style.Book(TITLE, DESCRIPTION, UNIT_COST, ISBN, NBR_OF_PAGE)
 values ('check', 'check', 10, 'check', 100);
+
+select * from jpa_core_style.product;
+
+delete from jpa_core_style.product;
+
+drop table jpa_core_style.product;
