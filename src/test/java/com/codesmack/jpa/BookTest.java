@@ -43,6 +43,8 @@ public class BookTest {
 
     @Test
     public void thatJDBCInsertionSuccessful() throws SQLException {
+        final String createQuery = "create table Book(ID bigint(255) not null auto_increment, TITLE VARCHAR(40), DESCRIPTION varchar(1000), UNIT_COST float(100,4), ISBN varchar(1000), NBR_OF_PAGE bigint(255), primary key (ID));";
+        statement.execute(createQuery);
         final String insertQuery = "insert into book (id, title, description, unit_cost, isbn, nbr_of_page) values " +
                 "(?, ?, ?, ?, ?, ?)";
         final BookNative book = new BookNative(new Long(1), "Codesmack's", "My Library", new Float(10), "123", 200);
@@ -53,10 +55,11 @@ public class BookTest {
             System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
         }
         statement.execute("delete from book");
+        statement.execute("drop table book");
     }
 
     @Test
-    public void thatEntityInsertionIsSuccessful() {
+    public void thatEntityInsertionIsSuccessful() throws SQLException {
         final BookEntity bookEntity = new BookEntity(new Long(1), "Codesmack's", "My Library", new Float(10), "123", 200);
         entityManager.getTransaction().begin();
         entityManager.persist(bookEntity);
@@ -68,10 +71,11 @@ public class BookTest {
         assertEquals("My Library", retrievedBook.getDescription());
         entityManager.remove(retrievedBook);
         entityManager.getTransaction().commit();
+        statement.execute("drop table BookEntity");
     }
 
     @Test
-    public void thatEntityInsertionIsSuccessfulForGeneratorType() {//this needs an auto increment PK in the DB.
+    public void thatEntityInsertionIsSuccessfulForGeneratorType() throws SQLException {//this needs an auto increment PK in the DB.
         final BookEntityWithGenerator bookEntity = new BookEntityWithGenerator("Codesmack's", "My Library", new Float(10), "123", 200);
         entityManager.getTransaction().begin();
         entityManager.persist(bookEntity);
@@ -82,10 +86,11 @@ public class BookTest {
         assertEquals("My Library", retrievedBook.getDescription());
         entityManager.remove(retrievedBook);
         entityManager.getTransaction().commit();
+        statement.execute("drop table BookEntityWithGenerator");
     }
 
     @Test
-    public void thatDetachedEntityDeletionIsSuccessful() {
+    public void thatDetachedEntityDeletionIsSuccessful() throws SQLException {
         final BookEntity bookEntity = new BookEntity(new Long(1), "Codesmack's", "My Library", new Float(10), "123", 200);
         entityManager.getTransaction().begin();
         entityManager.persist(bookEntity);
@@ -101,6 +106,7 @@ public class BookTest {
         final BookEntity retrievedBook = entityManager.find(BookEntity.class, bookEntity.getId());
         assertNull(retrievedBook);
         entityManager.getTransaction().commit();
+        statement.execute("drop table BookEntity");
     }
 
     private PreparedStatement getPreparedStatement(final String insertQuery, final BookNative book) throws SQLException {
@@ -111,11 +117,6 @@ public class BookTest {
         preparedStatement.setFloat(4, book.getUnitCost());
         preparedStatement.setString(5, book.getIsbn());
         preparedStatement.setInt(6, book.getNbrOfPage());
-        /*preparedStatement.setString(1, book.getTitle());
-        preparedStatement.setString(2, book.getDescription());
-        preparedStatement.setFloat(3, book.getUnitCost());
-        preparedStatement.setString(4, book.getIsbn());
-        preparedStatement.setInt(5, book.getNbrOfPage());*/
         return preparedStatement;
     }
 }
