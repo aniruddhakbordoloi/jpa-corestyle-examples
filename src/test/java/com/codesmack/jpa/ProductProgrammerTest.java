@@ -1,4 +1,4 @@
-package com.codesmack.jpa.unidirectional.onetomany;
+package com.codesmack.jpa;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
