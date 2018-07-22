@@ -28,3 +28,5 @@ drop table jpa_core_style.product_unidir_join_column
 
 select * from jpa_core_style.programmer_unidir_join_column;
 drop table jpa_core_style.programmer_unidir_join_column;
+
+select * from jpa_core_style.item_single_table;
