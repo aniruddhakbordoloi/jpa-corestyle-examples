@@ -7,19 +7,18 @@ ERROR: could not read a hi value
 com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'jpa_core_style.hibernate_sequence' doesn't exist
 The reason is:
 It will look for how the database that you are using generates ids. For MySql or HSQSL, there are increment fields that automatically increment. In Postgres or Oracle, they use sequence tables. Since you didn't specify a sequence table name, it will look for a sequence table named hibernate_sequence and use it for default. So you probably don't have such a sequence table in your database and now you get that error.
-Either add a hibernate_sequence or
-your own sequence table and use the annotations to name your sequence table that you have.
+Either add a hibernate_sequence or your own sequence table and use the annotations to name your sequence table that you have.
 
 Relationships:
 JoinColumn - A PK column in one table is a FK column in another.
 JoinTable - We use a third table to show the association among two tables. The third table would have FKs that are respective PKs in the other two tables.
 
-Possible Cardinalities between relations:
-JPA         RDBMS
-@OneToOne = JoinColumn
-@OneToMany = JoinTable
-@ManyToOne = JoinColumn
-@ManyToMany = JoinTable
+Possible Cardinalities between relations (default strategy):
+JPA         RDBMS           Fetch
+@OneToOne = JoinColumn      Eager
+@OneToMany = JoinTable      Lazy
+@ManyToOne = JoinColumn     Eager
+@ManyToMany = JoinTable     Lazy
 
 Observations:
 Without an auto increment generator in the DB, the generation type did not work at all. With it, the primary key was generated when used identity generation. Having an auto
@@ -30,6 +29,13 @@ changing the state of a persisted object in the scope of transaction start and c
 One to many unidirectional has a default JoinTable strategy. It leads to the creation of a third table where the primary keys of both concerned tables are matched.
 Check the test case - ProductProgrammerTest.thatUnidirectionalOneToManyInsertionIsSuccessful. Put a debug in the end line of the test case and then check the database. Creates a Join table.
 In case you want to override the default jointable strategy, use joincolumn annotation. Check test case ProductProgrammerTest.thatUnidirectionalOneToManyInsertionIsSuccessfulForJoinColumn.
+
+Inheritance strategies JPA:
+    Single Table per class - This is the default inheritance strategy
+    Joined subclass
+    Table per concrete class
+
+
 
 TODO:
 Read more about @Generated value strategies.

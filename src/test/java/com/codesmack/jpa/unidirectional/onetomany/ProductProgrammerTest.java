@@ -1,7 +1,5 @@
-package com.codesmack.jpa;
+package com.codesmack.jpa.unidirectional.onetomany;
 
-import com.codesmack.jpa.entity.Product;
-import com.codesmack.jpa.entity.Programmer;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,7 +14,6 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class ProductProgrammerTest {
@@ -42,26 +39,6 @@ public class ProductProgrammerTest {
         statement.execute("drop table programmer_unidir_join_column");
         statement.close();
         connection.close();
-    }
-
-    @Test
-    public void thatProductInsertionIsSuccessful() throws SQLException {
-        final Product product = new Product("Fusion Collections", "My Library", new Float(20.0), new Float(20.0), "Modern");
-        entityManager.getTransaction().begin();
-        entityManager.persist(product);
-        entityManager.getTransaction().commit();
-        final Product retrievedProduct = entityManager.find(Product.class, product.getId());
-        assertNotNull(retrievedProduct);
-    }
-
-    @Test
-    public void thatProgrammerInsertionIsSuccessful() throws SQLException {
-        final Programmer programmer = new Programmer("Codesmack", "Programmer by choice", "1987-10-22", "Object Oriented");
-        entityManager.getTransaction().begin();
-        entityManager.persist(programmer);
-        entityManager.getTransaction().commit();
-        final Programmer retrievedProgrammer = entityManager.find(Programmer.class, programmer.getId());
-        assertNotNull(retrievedProgrammer);
     }
 
     @Test
