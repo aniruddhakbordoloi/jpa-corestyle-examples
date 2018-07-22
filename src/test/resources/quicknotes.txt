@@ -27,6 +27,9 @@ increment and not having a generator also leads to error if PK is not provided.
 
 changing the state of a persisted object in the scope of transaction start and commit will reflect in the DB.
 
+One to many unidirectional has a default JoinTable strategy. It leads to the creation of a third table where the primary keys of both concerned tables are matched.
+Check the test case - ProductProgrammerTest.thatUnidirectionalOneToManyInsertionIsSuccessful. Put a debug in the end line of the test case and then check the database. Creates a Join table.
+
 TODO:
 Read more about @Generated value strategies.
 

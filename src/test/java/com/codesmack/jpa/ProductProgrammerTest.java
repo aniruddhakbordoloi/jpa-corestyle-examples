@@ -2,12 +2,13 @@ package com.codesmack.jpa;
 
 import com.codesmack.jpa.entity.Product;
 import com.codesmack.jpa.entity.Programmer;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class ProductProgrammerTest {
     private static EntityManager entityManager;
@@ -31,12 +33,6 @@ public class ProductProgrammerTest {
         entityManager = entityManagerFactory.createEntityManager();
     }
 
-    /*@After
-    public void destroy() throws SQLException {
-        statement.close();
-        connection.close();
-    }*/
-
     @AfterClass
     public static void destroyAll() throws SQLException {
         statement.execute("drop table programmer_product");
@@ -48,34 +44,22 @@ public class ProductProgrammerTest {
 
     @Test
     public void thatProductInsertionIsSuccessful() throws SQLException {
-        //insert
         final Product product = new Product("Fusion Collections", "My Library", new Float(20.0), new Float(20.0), "Modern");
         entityManager.getTransaction().begin();
         entityManager.persist(product);
         entityManager.getTransaction().commit();
-        //clean up
         final Product retrievedProduct = entityManager.find(Product.class, product.getId());
         assertNotNull(retrievedProduct);
-        entityManager.getTransaction().begin();
-        entityManager.remove(retrievedProduct);
-        entityManager.getTransaction().commit();
-        //statement.execute("drop table Product");
     }
 
     @Test
     public void thatProgrammerInsertionIsSuccessful() throws SQLException {
-        //insert
         final Programmer programmer = new Programmer("Codesmack", "Programmer by choice", "1987-10-22", "Object Oriented");
         entityManager.getTransaction().begin();
         entityManager.persist(programmer);
         entityManager.getTransaction().commit();
-        //clean up
         final Programmer retrievedProgrammer = entityManager.find(Programmer.class, programmer.getId());
         assertNotNull(retrievedProgrammer);
-        entityManager.getTransaction().begin();
-        entityManager.remove(retrievedProgrammer);
-        entityManager.getTransaction().commit();
-        //statement.execute("drop table Programmer");
     }
 
     @Test
@@ -89,18 +73,11 @@ public class ProductProgrammerTest {
         products.add(product);
         products.add(product);
         programmer.setProducts(products);
-        //insert
         entityManager.getTransaction().begin();
         entityManager.persist(programmer);
         entityManager.getTransaction().commit();
-        System.out.println(programmer);
-        //clean up
-        /*final com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany.Programmer retrievedProgrammer =
-                entityManager.find(com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany.Programmer.class, programmer.getId());
-        assertNotNull(retrievedProgrammer);
-        entityManager.getTransaction().begin();
-        entityManager.remove(retrievedProgrammer);
-        entityManager.getTransaction().commit();
-        statement.execute("drop table Programmer");*/
+        final com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany.Programmer retrievedProgrammer
+                = entityManager.find(com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany.Programmer.class, programmer.getId());
+        assertTrue(retrievedProgrammer.getProducts().size()> 0);
     }
 }

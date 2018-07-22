@@ -32,6 +32,10 @@ public class Programmer {
         this.id = id;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -50,5 +54,9 @@ public class Programmer {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
     }
 }
