@@ -1,11 +1,11 @@
-package com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany;
+package com.codesmack.jpa.entity.unidirectional.onetomany.joincolumn;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Programmer")
+@Table(name = "Programmer_UniDir_Join_Column")
 public class Programmer {
 
     @Id
@@ -18,6 +18,7 @@ public class Programmer {
     private String dob;
     private String language;
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
     private Set<Product> products = new HashSet<Product>();
 
     public Programmer() {}

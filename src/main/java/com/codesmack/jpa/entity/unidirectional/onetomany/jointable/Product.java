@@ -1,4 +1,4 @@
-package com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany;
+package com.codesmack.jpa.entity.unidirectional.onetomany.jointable;
 
 import javax.persistence.*;
 

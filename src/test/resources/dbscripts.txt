@@ -11,10 +11,20 @@ drop table jpa_core_style.book;
 insert into jpa_core_style.Book(TITLE, DESCRIPTION, UNIT_COST, ISBN, NBR_OF_PAGE)
 values ('check', 'check', 10, 'check', 100);
 
-select * from jpa_core_style.dvd;
-delete from jpa_core_style.dvd;
-drop table jpa_core_style.dvd;
+select * from jpa_core_style.product;
+delete from jpa_core_style.product;
+drop table jpa_core_style.product;
 
 select * from jpa_core_style.Programmer;
 delete from jpa_core_style.Programmer;
 drop table jpa_core_style.Programmer;
+
+select * from jpa_core_style.programmer_product;
+delete from jpa_core_style.programmer_product;
+drop table jpa_core_style.programmer_product;
+
+select * from jpa_core_style.product_unidir_join_column;
+drop table jpa_core_style.product_unidir_join_column
+
+select * from jpa_core_style.programmer_unidir_join_column;
+drop table jpa_core_style.programmer_unidir_join_column;

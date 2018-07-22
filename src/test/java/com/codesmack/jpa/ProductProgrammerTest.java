@@ -38,6 +38,8 @@ public class ProductProgrammerTest {
         statement.execute("drop table programmer_product");
         statement.execute("drop table Product");
         statement.execute("drop table Programmer");
+        statement.execute("drop table product_unidir_join_column");
+        statement.execute("drop table programmer_unidir_join_column");
         statement.close();
         connection.close();
     }
@@ -64,20 +66,39 @@ public class ProductProgrammerTest {
 
     @Test
     public void thatUnidirectionalOneToManyInsertionIsSuccessful() throws SQLException {
-        final com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany.Programmer programmer =
-                new com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany.Programmer("Codesmack", "Programmer by choice", "1987-10-22", "Object Oriented");
-        final com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany.Product product =
-                new com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany.Product("Fusion Collections", "My Library", new Float(20.0), new Float(20.0), "Modern");
-        final Set<com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany.Product> products =
-                new HashSet<com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany.Product>();
+        final com.codesmack.jpa.entity.unidirectional.onetomany.jointable.Programmer programmer =
+                new com.codesmack.jpa.entity.unidirectional.onetomany.jointable.Programmer("Codesmack", "Programmer by choice", "1987-10-22", "Object Oriented");
+        final com.codesmack.jpa.entity.unidirectional.onetomany.jointable.Product product =
+                new com.codesmack.jpa.entity.unidirectional.onetomany.jointable.Product("Fusion Collections", "My Library", new Float(20.0), new Float(20.0), "Modern");
+        final Set<com.codesmack.jpa.entity.unidirectional.onetomany.jointable.Product> products =
+                new HashSet<com.codesmack.jpa.entity.unidirectional.onetomany.jointable.Product>();
         products.add(product);
         products.add(product);
         programmer.setProducts(products);
         entityManager.getTransaction().begin();
         entityManager.persist(programmer);
         entityManager.getTransaction().commit();
-        final com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany.Programmer retrievedProgrammer
-                = entityManager.find(com.codesmack.jpa.entity.com.codesmack.jpa.entity.unidirectional.onetomany.Programmer.class, programmer.getId());
+        final com.codesmack.jpa.entity.unidirectional.onetomany.jointable.Programmer retrievedProgrammer
+                = entityManager.find(com.codesmack.jpa.entity.unidirectional.onetomany.jointable.Programmer.class, programmer.getId());
+        assertTrue(retrievedProgrammer.getProducts().size()> 0);
+    }
+
+    @Test
+    public void thatUnidirectionalOneToManyInsertionIsSuccessfulForJoinColumn() throws SQLException {
+        final com.codesmack.jpa.entity.unidirectional.onetomany.joincolumn.Programmer programmer =
+                new com.codesmack.jpa.entity.unidirectional.onetomany.joincolumn.Programmer("Codesmack", "Programmer by choice", "1987-10-22", "Object Oriented");
+        final com.codesmack.jpa.entity.unidirectional.onetomany.joincolumn.Product product =
+                new com.codesmack.jpa.entity.unidirectional.onetomany.joincolumn.Product("Fusion Collections", "My Library", new Float(20.0), new Float(20.0), "Modern");
+        final Set<com.codesmack.jpa.entity.unidirectional.onetomany.joincolumn.Product> products =
+                new HashSet<com.codesmack.jpa.entity.unidirectional.onetomany.joincolumn.Product>();
+        products.add(product);
+        products.add(product);
+        programmer.setProducts(products);
+        entityManager.getTransaction().begin();
+        entityManager.persist(programmer);
+        entityManager.getTransaction().commit();
+        final com.codesmack.jpa.entity.unidirectional.onetomany.joincolumn.Programmer retrievedProgrammer
+                = entityManager.find(com.codesmack.jpa.entity.unidirectional.onetomany.joincolumn.Programmer.class, programmer.getId());
         assertTrue(retrievedProgrammer.getProducts().size()> 0);
     }
 }
