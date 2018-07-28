@@ -37,6 +37,9 @@ public class ItemTest {
     @AfterClass
     public static void destroyAll() throws SQLException {
         statement.execute("drop table item_single_table");
+        /*statement.execute("drop table cd_item_concrete_table");
+        statement.execute("drop table book_item_concrete_table");
+        statement.execute("drop table item_concrete_table");*/
         statement.close();
         connection.close();
     }
@@ -54,11 +57,36 @@ public class ItemTest {
 
     @Test
     public void thatBookInsertionWorksWithSingleTableStrategy() {
-        final Book book = new Book ("Program Detoxification", "A cheat code!", new Float(30), "cdsmck007", 300, new Date(System.currentTimeMillis()));
+        final Book book = new Book("Program Detoxification", "A cheat code!", new Float(30), "cdsmck007", 300, new Date(System.currentTimeMillis()));
         transaction.begin();
         entityManager.persist(book);
         transaction.commit();
         final Book retrievedBook = entityManager.find(Book.class, book.getId());
         assertNotNull(retrievedBook.getIsbn());
     }
+
+    /*@Test
+    public void thatCDInsertionWorksWithConcreteTableStrategy() {
+        final com.codesmack.jpa.entity.inheritance.table_per_concrete_class.CD cd =
+                new com.codesmack.jpa.entity.inheritance.table_per_concrete_class.CD("Digitally encoded", "Watch to decode!", new Float(33.50),
+                        new Float(20), "GEN-Y");
+        transaction.begin();
+        entityManager.persist(cd);
+        transaction.commit();
+        final com.codesmack.jpa.entity.inheritance.table_per_concrete_class.CD retrievedCD =
+                entityManager.find(com.codesmack.jpa.entity.inheritance.table_per_concrete_class.CD.class, cd.getId());
+        assertNotNull(retrievedCD.getTotalDuration());
+    }
+
+    @Test
+    public void thatBookInsertionWorksWithConcreteTableStrategy() {
+        final com.codesmack.jpa.entity.inheritance.table_per_concrete_class.Book book =
+                new com.codesmack.jpa.entity.inheritance.table_per_concrete_class.Book("Program Detoxification", "A cheat code!", new Float(30), "cdsmck007", 300, new Date(System.currentTimeMillis()));
+        transaction.begin();
+        entityManager.persist(book);
+        transaction.commit();
+        final com.codesmack.jpa.entity.inheritance.table_per_concrete_class.Book retrievedBook =
+                entityManager.find(com.codesmack.jpa.entity.inheritance.table_per_concrete_class.Book.class, book.getId());
+        assertNotNull(retrievedBook.getIsbn());
+    }*/
 }

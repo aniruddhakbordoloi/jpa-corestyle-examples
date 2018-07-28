@@ -31,9 +31,11 @@ Check the test case - ProductProgrammerTest.thatUnidirectionalOneToManyInsertion
 In case you want to override the default jointable strategy, use joincolumn annotation. Check test case ProductProgrammerTest.thatUnidirectionalOneToManyInsertionIsSuccessfulForJoinColumn.
 
 Inheritance strategies JPA:
-    Single Table per class - This is the default inheritance strategy. All subclass tables into the parent table with a discriminator value.
+    Single Table per class - This is the default inheritance strategy. Only one table is created and the subclass type is determined by the discriminator column created.
     Joined subclass - Independent Subclass tables whose PK matches the PK in parent and the parent table contains a discriminator.
-    Table per concrete class - Subclass tables would contain all the columns that the parent has. PK of concerned subclass and the parent matches, however, there's no discriminator column in parent.
+    Table per concrete class - Total tables created: Parent + All children. After insertion, parent is empty and only children would be populated. Children would have their own
+    specific column values and also accommodate the parent column values. There is no discriminator type since every record makes it to their own respective table. The id generation
+    type was modified to TABLE for this to work. This strategy also generates a hibernate sequence.
 
 
 

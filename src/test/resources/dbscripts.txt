@@ -1,5 +1,7 @@
 create database jpa_core_style;
 
+drop database jpa_core_style;
+
 create table jpa_core_style.Book(ID bigint(255) not null, TITLE VARCHAR(40), DESCRIPTION varchar(1000), UNIT_COST float(100,4), ISBN varchar(1000), NBR_OF_PAGE bigint(255), primary key (ID));
 
 create table jpa_core_style.Book(ID bigint(255) not null auto_increment, TITLE VARCHAR(40), DESCRIPTION varchar(1000), UNIT_COST float(100,4), ISBN varchar(1000), NBR_OF_PAGE bigint(255), primary key (ID));
@@ -29,4 +31,7 @@ drop table jpa_core_style.product_unidir_join_column
 select * from jpa_core_style.programmer_unidir_join_column;
 drop table jpa_core_style.programmer_unidir_join_column;
 
-select * from jpa_core_style.item_single_table;
+select * from jpa_core_style.item_single_table
+select * from jpa_core_style.cd_item_concrete_table
+select * from jpa_core_style.book_item_concrete_table
+select * from jpa_core_style.item_concrete_table
