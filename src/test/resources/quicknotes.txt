@@ -32,7 +32,7 @@ In case you want to override the default jointable strategy, use joincolumn anno
 
 Inheritance strategies JPA:
     Single Table per class - This is the default inheritance strategy. Only one table is created and the subclass type is determined by the discriminator column created.
-    Joined subclass - Independent Subclass tables whose PK matches the PK in parent and the parent table contains a discriminator.
+    Joined subclass - Independent Subclass tables whose PK matches the PK in parent and the parent table contains a discriminator. Common columns would stay in the parent, the child specific columns would only stay in the child.
     Table per concrete class - Total tables created: Parent + All children. After insertion, parent is empty and only children would be populated. Children would have their own
     specific column values and also accommodate the parent column values. There is no discriminator type since every record makes it to their own respective table. The id generation
     type was modified to TABLE for this to work. This strategy also generates a hibernate sequence.
