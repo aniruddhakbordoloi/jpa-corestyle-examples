@@ -40,3 +40,6 @@ select * from jpa_core_style.hibernate_sequences
 select * from jpa_core_style.item_joined_table
 select * from jpa_core_style.book_item_joined_table
 select * from jpa_core_style.cd_item_joined_table
+
+select * from jpa_core_style.book_mapped_table
+select * from jpa_core_style.cd_mapped_table

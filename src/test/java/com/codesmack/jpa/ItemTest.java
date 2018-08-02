@@ -44,6 +44,8 @@ public class ItemTest {
         statement.execute("drop table book_item_joined_table");
         statement.execute("drop table item_joined_table");
         statement.execute("drop table hibernate_sequences");
+        statement.execute("drop table cd_mapped_table");
+        statement.execute("drop table book_mapped_table");
         statement.close();
         connection.close();
     }
@@ -116,6 +118,31 @@ public class ItemTest {
         transaction.commit();
         final com.codesmack.jpa.entity.inheritance.joined_subclass.Book retrievedBook =
                 entityManager.find(com.codesmack.jpa.entity.inheritance.joined_subclass.Book.class, book.getId());
+        assertNotNull(retrievedBook.getIsbn());
+    }
+
+    @Test
+    public void thatCDInsertionWorksWithMappedSuperClass() {
+        final com.codesmack.jpa.entity.inheritance.mapped_superclass.CD cd =
+                new com.codesmack.jpa.entity.inheritance.mapped_superclass.CD("Digitally encoded", "Watch to decode!", new Float(33.50),
+                        new Float(20), "GEN-Y");
+        transaction.begin();
+        entityManager.persist(cd);
+        transaction.commit();
+        final com.codesmack.jpa.entity.inheritance.mapped_superclass.CD retrievedCD =
+                entityManager.find(com.codesmack.jpa.entity.inheritance.mapped_superclass.CD.class, cd.getId());
+        assertNotNull(retrievedCD.getTotalDuration());
+    }
+
+    @Test
+    public void thatBookInsertionWorksWithMappedSuperClass() {
+        final com.codesmack.jpa.entity.inheritance.mapped_superclass.Book book =
+                new com.codesmack.jpa.entity.inheritance.mapped_superclass.Book("Program Detoxification", "A cheat code!", new Float(30), "cdsmck007", 300, new Date(System.currentTimeMillis()));
+        transaction.begin();
+        entityManager.persist(book);
+        transaction.commit();
+        final com.codesmack.jpa.entity.inheritance.mapped_superclass.Book retrievedBook =
+                entityManager.find(com.codesmack.jpa.entity.inheritance.mapped_superclass.Book.class, book.getId());
         assertNotNull(retrievedBook.getIsbn());
     }
 }
