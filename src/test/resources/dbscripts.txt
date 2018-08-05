@@ -17,7 +17,12 @@ select * from jpa_core_style.product;
 delete from jpa_core_style.product;
 drop table jpa_core_style.product;
 
+select * from jpa_core_style.product_callback;
+select * from jpa_core_style.programmer_callback;
+select * from jpa_core_style.programmer_callback_product_callback;
+
 select * from jpa_core_style.Programmer;
+select count(*) from jpa_core_style.Programmer;
 delete from jpa_core_style.Programmer;
 drop table jpa_core_style.Programmer;
 

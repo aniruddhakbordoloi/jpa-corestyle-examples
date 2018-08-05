@@ -14,11 +14,11 @@ JoinColumn - A PK column in one table is a FK column in another.
 JoinTable - We use a third table to show the association among two tables. The third table would have FKs that are respective PKs in the other two tables.
 
 Possible Cardinalities between relations (default strategy):
-JPA         RDBMS           Fetch
-@OneToOne = JoinColumn      Eager
-@OneToMany = JoinTable      Lazy
-@ManyToOne = JoinColumn     Eager
-@ManyToMany = JoinTable     Lazy
+JPA               RDBMS            Fetch
+@OneToOne       JoinColumn         Eager
+@OneToMany      JoinTable          Lazy
+@ManyToOne      JoinColumn         Eager
+@ManyToMany     JoinTable          Lazy
 
 Observations:
 Without an auto increment generator in the DB, the generation type did not work at all. With it, the primary key was generated when used identity generation. Having an auto
@@ -37,10 +37,35 @@ Inheritance strategies JPA:
     specific column values and also accommodate the parent column values. There is no discriminator type since every record makes it to their own respective table. The id generation
     type was modified to TABLE for this to work. This strategy also generates a hibernate sequence.
 
+Entity lifecycle:
+    Events in an entity lifecycle: Persist, Update, Remove, Load
+    States in an entity lifecycle which are governed by the events:
+        Transient: When a persistent object is newly initialized but not persisted yet.
+        Managed: When an entity is persisted by the Entity Manager or when it is loaded from the database. Operating on a managed entity loaded from the DB would change values in the DB.
+        Detached: When a managed entity is committed or rolled back. It becomes like a java class without any DB synchronization.
+        Removed: When an entity is deleted from the DB and not managed anymore. We can call merge on a detached entity to reattach it for DB synchronization and then call remove for delete.
+
+Callback methods:
+    On each event of an entity lifecycle, a pre and post method can be intercepted by the Entity Manager. They are helpful in executing business methods in
+    the entity pojo before or after an event.
+    Annotations for the same would be: @PrePersist and @PostPersist, @PostLoad, @PreUpdate and @PostUpdate, @PreRemove and @PostRemove.
+    Example: We want to update a Person entity and here are some practical examples on how we would use it:
+        @PrePersist:    Verify whether the Person's first and last name have been populated and are not null/empty.
+        @PostPersist:   Log a successful message when a person has been persisted OR shoot an email about a new person registration.
+        @PostLoad:      Massage the data that has been loaded from the database. An example is, based on the year of birth, you can calculate the age in the
+                        entity class itself. You need to call refresh on entity manager after the find() operation for allowing post load to be called.
+
+Entity Listeners:
+    In the callback method case, we have seen that Business logic specific to attributes(first/last name for example) inside an entity are put inside the entity itself with the
+    callback annotations. But what if this logic is common for more than one Entity? In that case we create an EntityListener,, a POJO annotated with @EntityListeners, then
+    move the business logic methods into this class and then annotate these methods with the callback annotations. Now that the listener is completely created, we can register it
+    with the respective Entities that may need them executed.
+    But what if we need a listener for all entities? In this case, a default entity should be created in the entity mapping file. Then all entities will have this registered
+    with them. However, out of 10, you want to exclude a default listener for only 1, you can still do that with @ExcludeDefaultListeners.
+
+
 
 
 
 TODO:
 Read more about @Generated value strategies.
-
-
